@@ -122,14 +122,20 @@ func (s *Server) handleConn(conn *core.Conn) error {
 
 	log.Debugf("handleConn: IsPublisher=%v", connServer.IsPublisher())
 	if connServer.IsPublisher() {
-		channel, err := configure.RoomKeys.GetChannel(name)
-		if err != nil {
+		//channel, err := configure.RoomKeys.GetChannel(name)
+		//if err != nil {
+		//	err := fmt.Errorf("invalid key")
+		//	conn.Close()
+		//	log.Error("CheckKey err: ", err)
+		//	return err
+		//}
+		if name != "movie" {
 			err := fmt.Errorf("invalid key")
 			conn.Close()
 			log.Error("CheckKey err: ", err)
 			return err
 		}
-		connServer.PublishInfo.Name = channel
+		connServer.PublishInfo.Name = name
 		if pushlist, ret := configure.GetStaticPushUrlList(appname); ret && (pushlist != nil) {
 			log.Debugf("GetStaticPushUrlList: %v", pushlist)
 		}
@@ -143,8 +149,9 @@ func (s *Server) handleConn(conn *core.Conn) error {
 			writer := s.getter.GetWriter(reader.Info())
 			s.handler.HandleWriter(writer)
 		}
-		flvWriter := new(flv.FlvDvr)
-		s.handler.HandleWriter(flvWriter.GetWriter(reader.Info()))
+                // Don't write hundreds of gigs to disk
+		// flvWriter := new(flv.FlvDvr)
+		// s.handler.HandleWriter(flvWriter.GetWriter(reader.Info()))
 	} else {
 		writer := NewVirWriter(connServer)
 		log.Debugf("new player: %+v", writer.Info())

@@ -135,9 +135,9 @@ func main() {
 	`, VERSION)
 
 	stream := rtmp.NewRtmpStream()
-	hlsServer := startHls()
+	//hlsServer := startHls()
 	startHTTPFlv(stream)
 	startAPI(stream)
 
-	startRtmp(stream, hlsServer)
+	startRtmp(stream, nil)
 }

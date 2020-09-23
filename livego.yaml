@@ -3,19 +3,19 @@
 
 # # FLV Options
 # flv_dir: "./tmp"
-# httpflv_addr: ":7001"
+httpflv_addr: "127.0.0.2:7001"
 
 # # RTMP Options
-# rtmp_addr: ":1935"
-# read_timeout: 10
-# write_timeout: 10
+rtmp_addr: ":62154"
+read_timeout: 10
+write_timeout: 10
 
 # # HLS Options
 # hls_addr: ":7002"
 
 # # API Options
-# api_addr: ":8090"
+api_addr: "127.0.0.1:8090"
 server:
 - appname: live
   live: true
-  hls: true
+  hls: false
